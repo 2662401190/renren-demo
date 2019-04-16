@@ -6,10 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,23 +33,37 @@ public class TestController {
     @GetMapping("/logout")
     public  String logout(){
 
-
+        Subject subject= SecurityUtils.getSubject();
+        if (subject != null) {
+            subject.logout();
+        }
         return "login";
     }
 
-    @GetMapping("/admin")
+    @RequestMapping("/admin")
     @ResponseBody
     public  String admin(){
 
         return "admin success";
     }
 
+    @RequestMapping("/unauthorized")
+    public String unauthorized(){
+
+        return "unauthorized";
+    }
+
+    @RequestMapping("/edit")
+    @ResponseBody
+    public String edit(){
+
+        return "edit success";
+    }
 
     @PostMapping("/loginUser")
     public String loginUser(@RequestParam("username")  String username,
                             @RequestParam("password")  String password,
                             HttpSession session){
-
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject= SecurityUtils.getSubject();
         try {

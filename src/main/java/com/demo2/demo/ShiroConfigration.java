@@ -39,11 +39,12 @@ public class ShiroConfigration {
         filterChainDefinitonMap.put("/login", "anon");
         //  当前 请求不被拦截
         filterChainDefinitonMap.put("/loginUser", "anon");
+        //  只有拿到edit 权限的人  才能访问
+       filterChainDefinitonMap.put("/edit", "perms[edit]");
+        // 设置什么角色访问什么路劲
+       filterChainDefinitonMap.put("/admin", "roles[admin]");
         filterChainDefinitonMap.put("/**", "user");
-
-
         filterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitonMap);
-
         return filterFactoryBean;
     }
 
@@ -64,7 +65,6 @@ public class ShiroConfigration {
     public CredentialMatcher credentialMatcher() {
         return  new CredentialMatcher();
     }
-
 
     /**
      *  spring  与 shiro 相关联

@@ -10,6 +10,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.CollectionUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ public class AuthRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
-
-
     /**
      * 授权 使用
      * @param principalCollection
@@ -37,12 +36,13 @@ public class AuthRealm extends AuthorizingRealm {
         //  从session  里面获取用户
         User user = (User) principalCollection.fromRealm(this.getClass().getName()).iterator().next();
         List<String> permissionList=new ArrayList<>();
-
+        List<String> releNameList=new ArrayList<>();
         //  拿到所有用户的角色
         Set<Role> roleSet=user.getRoles();
         if (CollectionUtils.isEmpty(roleSet)) {
             //  角色不为空
             for (Role role : roleSet) {
+                releNameList.add(role.getName());
                 Set<Permission> permissionSet=role.getPermissions();
                 if(CollectionUtils.isEmpty(permissionSet)){
                     for (Permission permission : permissionSet) {
@@ -52,8 +52,8 @@ public class AuthRealm extends AuthorizingRealm {
                 }
             }
         }
-
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        info.addRoles(releNameList);
         info.addStringPermissions(permissionList);
         return info;
     }
