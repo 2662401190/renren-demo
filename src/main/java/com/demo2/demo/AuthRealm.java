@@ -4,12 +4,12 @@ import com.demo2.demo.model.Permission;
 import com.demo2.demo.model.Role;
 import com.demo2.demo.model.User;
 import com.demo2.demo.service.UserService;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.CollectionUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -35,20 +35,16 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //  从session  里面获取用户
         User user = (User) principalCollection.fromRealm(this.getClass().getName()).iterator().next();
-        System.out.println("............");
-        System.out.println(user);
         List<String> permissionList=new ArrayList<>();
         List<String> releNameList=new ArrayList<>();
         //  拿到所有用户的角色
         Set<Role> roleSet=user.getRoles();
-        if (CollectionUtils.isEmpty(roleSet)) {
+        if (CollectionUtils.isNotEmpty(roleSet)) {
             //  角色不为空
             for (Role role : roleSet) {
                 releNameList.add(role.getName());
-                System.out.println("........................");
-                System.out.println(role.getName());
                 Set<Permission> permissionSet=role.getPermissions();
-                if(CollectionUtils.isEmpty(permissionSet)){
+                if(CollectionUtils.isNotEmpty(permissionSet)){
                     for (Permission permission : permissionSet) {
                         //  根据 permissionName 来判断一个用户是否具有某个权限
                         permissionList.add(permission.getName());
@@ -57,8 +53,8 @@ public class AuthRealm extends AuthorizingRealm {
             }
         }
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addRoles(releNameList);
         info.addStringPermissions(permissionList);
+        info.addRoles(releNameList);
         return info;
     }
 

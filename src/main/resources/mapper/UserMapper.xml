@@ -8,7 +8,7 @@
         <result property="password" column="password"/>
         <collection property="roles" ofType="com.demo2.demo.model.Role">
             <id property="rid" column="rid"/>
-            <result property="name" column="name"/>
+            <result property="name" column="rname"/>
             <collection property="permissions" ofType="com.demo2.demo.model.Permission">
                 <id property="pid" column="pid"/>
                 <result property="name" column="name"/>
