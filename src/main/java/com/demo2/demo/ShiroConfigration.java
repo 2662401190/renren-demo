@@ -32,7 +32,6 @@ public class ShiroConfigration {
         filterFactoryBean.setSuccessUrl("/index");
         //  权限不通过返回的url
         filterFactoryBean.setUnauthorizedUrl("/unauthorized");
-
         //  key 是访问的请求  value 是使用什么样的拦截器
         LinkedHashMap<String,String> filterChainDefinitonMap=new LinkedHashMap<>();
         filterChainDefinitonMap.put("/index", "authc");

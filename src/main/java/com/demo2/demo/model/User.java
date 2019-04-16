@@ -17,6 +17,16 @@ public class User {
 
     private Set<Role> roles=new HashSet<>();
 
+    public User() {
+    }
+
+    public User(Integer uid, String username, String password, Set<Role> roles) {
+        this.uid = uid;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public Integer getUid() {
         return uid;
     }
@@ -47,5 +57,15 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

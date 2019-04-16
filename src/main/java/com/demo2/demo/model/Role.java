@@ -17,6 +17,26 @@ public class Role {
 
     private Set<User> users=new HashSet<>();
 
+    public Role() {
+    }
+
+    public Role(Integer rid, String name, Set<Permission> permissions, Set<User> users) {
+        this.rid = rid;
+        this.name = name;
+        this.permissions = permissions;
+        this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "rid=" + rid +
+                ", name='" + name + '\'' +
+                ", permissions=" + permissions +
+                ", users=" + users +
+                '}';
+    }
+
     public Set<User> getUsers() {
         return users;
     }

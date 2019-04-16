@@ -12,6 +12,16 @@ public class Permission {
 
     private String url;
 
+
+    public Permission() {
+    }
+
+    public Permission(Integer pid, String name, String url) {
+        this.pid = pid;
+        this.name = name;
+        this.url = url;
+    }
+
     public Integer getPid() {
         return pid;
     }

@@ -35,6 +35,8 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //  从session  里面获取用户
         User user = (User) principalCollection.fromRealm(this.getClass().getName()).iterator().next();
+        System.out.println("............");
+        System.out.println(user);
         List<String> permissionList=new ArrayList<>();
         List<String> releNameList=new ArrayList<>();
         //  拿到所有用户的角色
@@ -43,6 +45,8 @@ public class AuthRealm extends AuthorizingRealm {
             //  角色不为空
             for (Role role : roleSet) {
                 releNameList.add(role.getName());
+                System.out.println("........................");
+                System.out.println(role.getName());
                 Set<Permission> permissionSet=role.getPermissions();
                 if(CollectionUtils.isEmpty(permissionSet)){
                     for (Permission permission : permissionSet) {
